@@ -112,17 +112,17 @@ class Autobot:
 
         return self.commands
 
-# Function to generate a random grid
-def generate_random_grid(rows, cols, obstacle_prob=0.2):
-    grid = []
-    for i in range(rows):
-        row = []
-        for j in range(cols):
-            if random.random() < obstacle_prob:
-                row.append('X')  # Obstacle
-            else:
-                row.append('.')  # Empty space
-        grid.append(row)
+# Function to generate a user-defined grid with obstacles
+def generate_user_grid(rows, cols):
+    grid = [['.' for _ in range(cols)] for _ in range(rows)]
+    num_obstacles = int(input("Enter the number of obstacles: "))
+    
+    for i in range(num_obstacles):
+        print(f"Enter the position for obstacle {i + 1}:")
+        obstacle_x = int(input(f"Obstacle row (0 to {rows - 1}): "))
+        obstacle_y = int(input(f"Obstacle column (0 to {cols - 1}): "))
+        grid[obstacle_x][obstacle_y] = 'X'
+    
     return grid
 
 # Function to create autobots and set their positions based on user input
@@ -148,12 +148,12 @@ cols = int(input("Enter the number of columns for the grid: "))
 num_autobots = int(input("Enter the number of Autobots: "))
 
 # Generate the grid and Autobots
-random_grid = generate_random_grid(rows, cols)
-autobots = create_autobots(num_autobots, random_grid)
+user_grid = generate_user_grid(rows, cols)
+autobots = create_autobots(num_autobots, user_grid)
 
 # Print the generated grid
 print("\nGenerated Grid:")
-for row in random_grid:
+for row in user_grid:
     print(' '.join(row))
 
 # Simulate movements for each Autobot
